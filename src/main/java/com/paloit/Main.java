@@ -1,29 +1,17 @@
 package com.paloit;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.commons.dbcp2.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-
         CamelContext context = new DefaultCamelContext();
 
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/camelTest");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("postgres");
+        MongoClientProvider mongoClientProvider = new MongoClientProvider();
+        context.getRegistry().bind(AppConfig.MONGO_BEAN, mongoClientProvider.provide());
 
-        String mongoConnectionString = "mongodb://root:a05pwd8u#d6J@localhost:27017";
-        context.getRegistry().bind("mongoBean", mongoConnectionString);
-
-        context.getRegistry().bind("myDataSource", dataSource);
-
-        MongoClient mongoClient = MongoClients.create("mongodb://root:a05pwd8u#d6J@localhost:27017");
-        context.getRegistry().bind("mongoBean", mongoClient);
+        DataSourceProvider dataSourceProvider = new DataSourceProvider();
+        context.getRegistry().bind(AppConfig.DATASOURCE, dataSourceProvider.provide());
 
         context.addRoutes(new RestToRestRoute());
         context.start();
@@ -34,4 +22,3 @@ public class Main {
         }
     }
 }
-
