@@ -1,4 +1,3 @@
-```markdown
 # CamelESB
 
 CamelESB is a Java project developed by `com.paloit` to facilitate various integration patterns and components using Apache Camel.
@@ -55,6 +54,17 @@ Upon running, the application initializes a `CamelContext` and sets up connectio
 
 Configuration and provisioning of MongoDB client and JDBC DataSource are handled by `MongoClientProvider` and `DataSourceProvider` respectively. Ensure you have the necessary configuration set up for these components before running the application.
 
+## How to test this?
+
+```
+curl -X "POST" "http://localhost:8080/api/input" \
+-H 'Content-Type: application/json; charset=utf-8' \
+-d $'{
+"firstName": "Tony",
+"lastName": "Almeida"
+}'
+```
+
 ## Contributing
 
 Please follow the standard pull request process if you have any updates you'd like to contribute.
@@ -66,4 +76,3 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 ## Contact
 
 For any questions or concerns, please open an issue on this repository, and we'll get back to you as soon as possible.
-```
